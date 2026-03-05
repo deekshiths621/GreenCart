@@ -55,6 +55,26 @@ const AdminLayout = () => {
                         <span>Categories</span>
                     </NavLink>
                     <NavLink
+                        to='/admin/add-product'
+                        className={({ isActive }) =>
+                            `flex items-center gap-3 p-3 rounded-lg mb-2 ${isActive ? 'bg-primary text-white' : 'text-gray-700 hover:bg-gray-100'
+                            }`
+                        }
+                    >
+                        <span>➕</span>
+                        <span>Add Product</span>
+                    </NavLink>
+                    <NavLink
+                        to='/admin/product-list'
+                        className={({ isActive }) =>
+                            `flex items-center gap-3 p-3 rounded-lg mb-2 ${isActive ? 'bg-primary text-white' : 'text-gray-700 hover:bg-gray-100'
+                            }`
+                        }
+                    >
+                        <span>📋</span>
+                        <span>Product List</span>
+                    </NavLink>
+                    <NavLink
                         to='/admin/products'
                         className={({ isActive }) =>
                             `flex items-center gap-3 p-3 rounded-lg mb-2 ${isActive ? 'bg-primary text-white' : 'text-gray-700 hover:bg-gray-100'
@@ -62,7 +82,7 @@ const AdminLayout = () => {
                         }
                     >
                         <span>📦</span>
-                        <span>Products</span>
+                        <span>Manage Products</span>
                     </NavLink>
                     <NavLink
                         to='/admin/delivery-persons'
@@ -75,6 +95,16 @@ const AdminLayout = () => {
                         <span>Delivery Persons</span>
                     </NavLink>
                     <NavLink
+                        to='/admin/seller-orders'
+                        className={({ isActive }) =>
+                            `flex items-center gap-3 p-3 rounded-lg mb-2 ${isActive ? 'bg-primary text-white' : 'text-gray-700 hover:bg-gray-100'
+                            }`
+                        }
+                    >
+                        <span>📦</span>
+                        <span>Seller Orders</span>
+                    </NavLink>
+                    <NavLink
                         to='/admin/orders'
                         className={({ isActive }) =>
                             `flex items-center gap-3 p-3 rounded-lg mb-2 ${isActive ? 'bg-primary text-white' : 'text-gray-700 hover:bg-gray-100'
@@ -82,7 +112,7 @@ const AdminLayout = () => {
                         }
                     >
                         <span>🛒</span>
-                        <span>Orders</span>
+                        <span>All Orders</span>
                     </NavLink>
                     <NavLink
                         to='/admin/users'

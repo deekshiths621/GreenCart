@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { useAppContext } from '../../context/AppContext'
-import { assets, dummyOrders } from '../../assets/assets'
+import { assets } from '../../assets/assets'
 import toast from 'react-hot-toast'
 
-const Orders = () => {
+const SellerOrders = () => {
     const {currency, axios} = useAppContext()
     const [orders, setOrders] = useState([])
     const [filteredOrders, setFilteredOrders] = useState([])
     const [fromDate, setFromDate] = useState('')
     const [toDate, setToDate] = useState('')
 
-    const fetchOrders = async () =>{
+    const fetchOrders = useCallback(async () =>{
         try {
             const { data } = await axios.get('/api/order/seller');
             if(data.success){
@@ -22,7 +22,7 @@ const Orders = () => {
         } catch (error) {
             toast.error(error.message)
         }
-    };
+    }, [axios]);
 
     const applyDateFilter = () => {
         let filtered = [...orders];
@@ -60,14 +60,14 @@ const Orders = () => {
 
     useEffect(()=>{
         fetchOrders();
-    },[])
+    },[fetchOrders])
 
 
   return (
-    <div className='no-scrollbar flex-1 h-[95vh] overflow-y-scroll'>
+    <div className='no-scrollbar flex-1 overflow-y-scroll'>
     <div className="md:p-10 p-4 space-y-4">
             <div className="flex justify-between items-center mb-4">
-                <h2 className="text-lg font-medium">Orders List</h2>
+                <h2 className="text-lg font-medium">Seller Orders</h2>
                 <div className="text-sm text-gray-600">
                     Total Orders: <span className="font-semibold">{filteredOrders.length}</span>
                 </div>
@@ -171,4 +171,4 @@ const Orders = () => {
   )
 }
 
-export default Orders
+export default SellerOrders

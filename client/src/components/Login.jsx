@@ -4,9 +4,9 @@ import toast from 'react-hot-toast';
 
 const Login = () => {
 
-    const {setShowUserLogin, setUser, setIsSeller, setIsAdmin, axios, navigate} = useAppContext()
+    const {setShowUserLogin, setUser, setIsAdmin, axios, navigate} = useAppContext()
 
-    const [loginType, setLoginType] = React.useState("user"); // user, admin, seller
+    const [loginType, setLoginType] = React.useState("user"); // user, admin
     const [state, setState] = React.useState("login");
     const [name, setName] = React.useState("");
     const [email, setEmail] = React.useState("");
@@ -35,16 +35,6 @@ const Login = () => {
                     setShowUserLogin(false)
                     navigate('/admin')
                     toast.success(data.message)
-                }else{
-                    toast.error(data.message)
-                }
-            } else if (loginType === "seller") {
-                const {data} = await axios.post('/api/seller/login', {email, password});
-                if(data.success){
-                    setIsSeller(true)
-                    setShowUserLogin(false)
-                    navigate('/seller')
-                    toast.success("Logged in successfully")
                 }else{
                     toast.error(data.message)
                 }
@@ -84,17 +74,6 @@ const Login = () => {
                         }`}
                     >
                         Admin
-                    </button>
-                    <button
-                        type="button"
-                        onClick={() => {setLoginType("seller"); setState("login")}}
-                        className={`flex-1 py-2 px-3 rounded-lg font-medium transition ${
-                            loginType === "seller" 
-                            ? "bg-primary text-white" 
-                            : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                        }`}
-                    >
-                        Seller
                     </button>
                 </div>
             </div>

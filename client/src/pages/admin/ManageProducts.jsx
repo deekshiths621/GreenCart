@@ -17,7 +17,7 @@ const ManageProducts = () => {
         description: '',
         image: '',
         bestSeller: false,
-        available: true
+        inStock: true
     });
 
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
@@ -68,7 +68,7 @@ const ManageProducts = () => {
             description: product.description,
             image: Array.isArray(product.image) ? product.image[0] || '' : product.image || '',
             bestSeller: product.bestSeller || false,
-            available: product.available
+            inStock: product.inStock !== undefined ? product.inStock : true
         });
         setShowEditModal(true);
     };
@@ -161,7 +161,7 @@ const ManageProducts = () => {
                                 alt={product.name}
                                 className="w-full h-48 object-cover"
                             />
-                            {!product.available && (
+                            {!product.inStock && (
                                 <div className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded text-xs font-semibold">
                                     Out of Stock
                                 </div>
@@ -322,11 +322,11 @@ const ManageProducts = () => {
                                 <label className="flex items-center gap-2">
                                     <input
                                         type="checkbox"
-                                        checked={formData.available}
-                                        onChange={(e) => setFormData({ ...formData, available: e.target.checked })}
+                                        checked={formData.inStock}
+                                        onChange={(e) => setFormData({ ...formData, inStock: e.target.checked })}
                                         className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
                                     />
-                                    <span className="text-sm font-medium text-gray-700">Available</span>
+                                    <span className="text-sm font-medium text-gray-700">In Stock</span>
                                 </label>
                             </div>
                         </div>

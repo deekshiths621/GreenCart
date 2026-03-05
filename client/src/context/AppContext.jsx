@@ -15,27 +15,12 @@ export const AppContextProvider = ({ children }) => {
     const navigate = useNavigate();
 
     const [user, setUser] = useState(null);
-    const [isSeller, setIsSeller] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
     const [showUserLogin, setShowUserLogin] = useState(false);
     const [products, setProducts] = useState([]);
     const [cartItems, setCartItems] = useState({});
     const [searchQuery, setSearchQuery] = useState(""); 
     const [addressChanged, setAddressChanged] = useState(false); 
-
-    const fetchSeller = useCallback(async () => {
-        try {
-            const { data } = await axios.get('/api/seller/is-auth');
-            if (data.success) {
-                setIsSeller(true);
-            } else {
-                setIsSeller(false);
-            }
-        } catch (error) {
-            console.log(error);
-            setIsSeller(false);
-        }
-    }, []);
 
     const fetchAdmin = useCallback(async () => {
         try {
@@ -134,12 +119,11 @@ export const AppContextProvider = ({ children }) => {
         // Calling them like this handles the "floating promise" warning
         const init = async () => {
             await fetchUser();
-            await fetchSeller();
             await fetchAdmin();
             await fetchProducts();
         }
         init();
-    }, [fetchUser, fetchSeller, fetchAdmin, fetchProducts]);
+    }, [fetchUser, fetchAdmin, fetchProducts]);
 
     useEffect(() => {
         const updateCart = async () => {
@@ -159,7 +143,7 @@ export const AppContextProvider = ({ children }) => {
     }, [cartItems, user]);
 
     const value = {
-        navigate, user, setUser, setIsSeller, isSeller, isAdmin, setIsAdmin,
+        navigate, user, setUser, isAdmin, setIsAdmin,
         showUserLogin, setShowUserLogin, products, currency, 
         addToCart, updateCartItem, removeFromCart, cartItems, 
         searchQuery, setSearchQuery, getCartAmount, getCartCount, 

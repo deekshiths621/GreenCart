@@ -356,7 +356,7 @@ export const deleteProductByAdmin = async (req, res) => {
 // Edit Product (Admin) : /api/admin/product/edit
 export const editProductByAdmin = async (req, res) => {
     try {
-        const { productId, name, category, price, offerPrice, description, bestSeller, available, image } = req.body;
+        const { productId, name, category, price, offerPrice, description, bestSeller, inStock, image } = req.body;
 
         if (!productId) {
             return res.json({ success: false, message: "Product ID is required" });
@@ -369,7 +369,7 @@ export const editProductByAdmin = async (req, res) => {
             offerPrice: Number(offerPrice || 0),
             description,
             bestSeller,
-            available
+            inStock
         };
 
         // Handle image - accept array or string, convert to array if needed
