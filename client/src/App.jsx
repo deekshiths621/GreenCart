@@ -16,6 +16,7 @@ import Loading from './components/Loading';
 import Profile from './pages/Profile';
 import TrackOrder from './pages/TrackOrder';
 import AdminLogin from './components/AdminLogin';
+import SellerLogin from './components/SellerLogin';
 import AdminLayout from './pages/admin/AdminLayout';
 import Dashboard from './pages/admin/Dashboard';
 import ManageCategories from './pages/admin/ManageCategories';
@@ -24,24 +25,28 @@ import ManageOrders from './pages/admin/ManageOrders';
 import ViewRatings from './pages/admin/ViewRatings';
 import ManageUsers from './pages/admin/ManageUsers';
 import ManageProducts from './pages/admin/ManageProducts';
-import AddProduct from './pages/admin/AddProduct';
 import ProductList from './pages/admin/ProductList';
-import SellerOrders from './pages/admin/SellerOrders';
+import AdminSellerOrders from './pages/admin/SellerOrders';
+import SellerLayout from './pages/seller/SellerLayout';
+import SellerDashboard from './pages/seller/SellerDashboard';
+import SellerAddProduct from './pages/seller/AddProduct';
+import SellerManageProducts from './pages/seller/ManageProducts';
 
 const App = () => {
 
   const isAdminPath = useLocation().pathname.includes("admin");
-  const {showUserLogin, isAdmin} = useAppContext()
+  const isSellerPath = useLocation().pathname.includes("seller");
+  const {showUserLogin, isAdmin, isSeller} = useAppContext()
 
   return (
     <div className='text-default min-h-screen text-gray-700 bg-white'>
 
-     {isAdminPath ? null : <Navbar/>} 
+     {isAdminPath || isSellerPath ? null : <Navbar/>} 
      {showUserLogin ? <Login/> : null}
 
      <Toaster />
 
-      <div className={`${isAdminPath ? "" : "px-6 md:px-16 lg:px-24 xl:px-32"}`}>
+      <div className={`${isAdminPath || isSellerPath ? "" : "px-6 md:px-16 lg:px-24 xl:px-32"}`}>
         <Routes>
           <Route path='/' element={<Home/>} />
           <Route path='/products' element={<AllProducts/>} />
@@ -57,18 +62,22 @@ const App = () => {
           <Route path='/admin' element={isAdmin ? <AdminLayout/> : <AdminLogin/>}>
             <Route index element={isAdmin ? <Dashboard/> : null} />
             <Route path='categories' element={<ManageCategories/>} />
-            <Route path='add-product' element={<AddProduct/>} />
             <Route path='product-list' element={<ProductList/>} />
             <Route path='products' element={<ManageProducts/>} />
             <Route path='delivery-persons' element={<ManageDelivery/>} />
-            <Route path='seller-orders' element={<SellerOrders/>} />
+            <Route path='seller-orders' element={<AdminSellerOrders/>} />
             <Route path='orders' element={<ManageOrders/>} />
             <Route path='users' element={<ManageUsers/>} />
             <Route path='ratings' element={<ViewRatings/>} />
           </Route>
+          <Route path='/seller' element={isSeller ? <SellerLayout/> : <SellerLogin/>}>
+            <Route index element={isSeller ? <SellerDashboard/> : null} />
+            <Route path='add-product' element={isSeller ? <SellerAddProduct/> : null} />
+            <Route path='products' element={isSeller ? <SellerManageProducts/> : null} />
+          </Route>
         </Routes>
       </div>
-     {!isAdminPath && <Footer/>}
+     {!isAdminPath && !isSellerPath && <Footer/>}
     </div>
   )
 }

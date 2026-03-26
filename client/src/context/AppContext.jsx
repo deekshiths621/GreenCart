@@ -16,6 +16,7 @@ export const AppContextProvider = ({ children }) => {
 
     const [user, setUser] = useState(null);
     const [isAdmin, setIsAdmin] = useState(false);
+    const [isSeller, setIsSeller] = useState(false);
     const [showUserLogin, setShowUserLogin] = useState(false);
     const [products, setProducts] = useState([]);
     const [cartItems, setCartItems] = useState({});
@@ -33,6 +34,20 @@ export const AppContextProvider = ({ children }) => {
         } catch (error) {
             console.log(error);
             setIsAdmin(false);
+        }
+    }, []);
+
+    const fetchSeller = useCallback(async () => {
+        try {
+            const { data } = await axios.get('/api/seller/is-auth');
+            if (data.success) {
+                setIsSeller(true);
+            } else {
+                setIsSeller(false);
+            }
+        } catch (error) {
+            console.log(error);
+            setIsSeller(false);
         }
     }, []);
 
@@ -120,10 +135,11 @@ export const AppContextProvider = ({ children }) => {
         const init = async () => {
             await fetchUser();
             await fetchAdmin();
+            await fetchSeller();
             await fetchProducts();
         }
         init();
-    }, [fetchUser, fetchAdmin, fetchProducts]);
+    }, [fetchUser, fetchAdmin, fetchSeller, fetchProducts]);
 
     useEffect(() => {
         const updateCart = async () => {
@@ -143,7 +159,7 @@ export const AppContextProvider = ({ children }) => {
     }, [cartItems, user]);
 
     const value = {
-        navigate, user, setUser, isAdmin, setIsAdmin,
+        navigate, user, setUser, isAdmin, setIsAdmin, isSeller, setIsSeller,
         showUserLogin, setShowUserLogin, products, currency, 
         addToCart, updateCartItem, removeFromCart, cartItems, 
         searchQuery, setSearchQuery, getCartAmount, getCartCount, 

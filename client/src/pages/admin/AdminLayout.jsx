@@ -12,7 +12,7 @@ const AdminLayout = () => {
             const { data } = await axios.get('/api/admin/logout');
             if (data.success) {
                 setIsAdmin(false);
-                navigate('/admin-login');
+                navigate('/');
                 toast.success(data.message);
             }
         } catch (error) {
@@ -53,16 +53,6 @@ const AdminLayout = () => {
                     >
                         <span>📑</span>
                         <span>Categories</span>
-                    </NavLink>
-                    <NavLink
-                        to='/admin/add-product'
-                        className={({ isActive }) =>
-                            `flex items-center gap-3 p-3 rounded-lg mb-2 ${isActive ? 'bg-primary text-white' : 'text-gray-700 hover:bg-gray-100'
-                            }`
-                        }
-                    >
-                        <span>➕</span>
-                        <span>Add Product</span>
                     </NavLink>
                     <NavLink
                         to='/admin/product-list'

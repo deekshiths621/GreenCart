@@ -190,7 +190,7 @@ const Cart = () => {
                                 </div>
                             </div>
                         </div>
-                        <p className="text-center">{currency}{product.offerPrice * product.quantity}</p>
+                        <p className="text-center">₹{product.offerPrice * product.quantity}</p>
                         <button onClick={() => removeFromCart(product._id)} className="cursor-pointer mx-auto hover:opacity-70 transition">
                             <img src={assets.remove_icon} alt="remove" className="w-6 h-6" />
                         </button>
@@ -293,12 +293,12 @@ const Cart = () => {
                 </div>
 
                 <div className="text-gray-600 mt-10 space-y-3 text-sm">
-                    <p className="flex justify-between"><span>Price</span><span>{currency}{getCartAmount()}</span></p>
+                    <p className="flex justify-between"><span>Price</span><span>₹{getCartAmount()}</span></p>
                     <p className="flex justify-between"><span>Shipping Fee</span><span className="text-green-600 font-medium">FREE</span></p>
-                    <p className="flex justify-between"><span>Tax (2%)</span><span>{currency}{(getCartAmount() * 0.02).toFixed(2)}</span></p>
+                    <p className="flex justify-between"><span>Tax (2%)</span><span>₹{(getCartAmount() * 0.02).toFixed(2)}</span></p>
                     <div className="border-t pt-3 flex justify-between text-lg font-bold text-gray-800 mt-2">
                         <span>Total:</span>
-                        <span>{currency}{(getCartAmount() * 1.02).toFixed(2)}</span>
+                        <span>₹{(getCartAmount() * 1.02).toFixed(2)}</span>
                     </div>
                 </div>
 
